@@ -7,15 +7,11 @@ class Node
     }
 }
 
-
-
-
 class Stack 
 {
     constructor()
     {
-        //'current' just helps me juggle data for the popData() method
-        this.current;
+       
         this.pointer;
         this.top;
         this.count = 0;
