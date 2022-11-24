@@ -44,7 +44,7 @@ class Stack
         //change top to next node down the stack:
         this.top = this.pointer;
         
-        //Change pointer to next node below it:
+        //Change global pointer
         this.pointer = this.top.pointer;
         
         //Retract the count
