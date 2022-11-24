@@ -1,41 +1,79 @@
+class Node 
+{
+    constructor(data, pointer = null)
+    {
+        this.data = data;
+        this.pointer = pointer;
+    }
+}
+
+
 
 
 class Stack 
 {
     constructor()
     {
+        //'current' just helps me juggle data for the popData() method
+        this.current;
+        this.pointer;
+        this.top;
         this.count = 0;
-        this.array = [];
     }
 
-    pushData(data)
+    pushData(node)
     {
-        this.array[this.count] = data;
-        this.count++
+        if (this.count == 0)
+        {
+            this.top = node;
+            this.pointer = null;
+            node.pointer = null;
+            this.count++;
+            return;
+        }
+        node.pointer = this.top;
+        this.pointer = this.top;
+        this.top = node;
+        this.count++;
+        
     }
 
     popData()
     {
-        let placeholderArray = [];
-        for(let i = 0; i < this.array.length - 1; i++)
-        {
-            console.log(this.array)
-            placeholderArray[i] = this.array[i]
+        let current = this.top;
+        
+        //remove the top nodes pointer:
+        current.pointer = null;
 
-        }
-        this.array = placeholderArray;
+        //change top to next node down the stack:
+        this.top = this.pointer;
+        
+        //Change pointer to next node below it:
+        this.pointer = this.top.pointer;
+        
+        //Retract the count
+        this.count--;
     }
-}
+};
 
-let testStack = new Stack;
+let stack = new Stack();
+let node1 = new Node("Hi there, i'm Node1!");
+let node2 = new Node("Hi there, i'm Node2!");
+let node3 = new Node("Hi there, i'm Node3!");
+let node4 = new Node("Hi there, i'm Node4!");
 
-testStack.pushData('test');
-testStack.pushData('that');
-testStack.pushData('funky');
-testStack.pushData('stuff');
-testStack.pushData('boy');
+stack.pushData(node1);
+stack.pushData(node2);
+stack.pushData(node3);
+stack.pushData(node4);
+stack.popData();
 
-testStack.popData();
 
-console.log(testStack.array);
+
+console.log(stack);
+
+
+
+
+
 
