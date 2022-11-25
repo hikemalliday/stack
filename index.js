@@ -1,10 +1,6 @@
 
 ///FIX POINTERS
 //Make method that prints stack
-//Pop until you drop at 'x'
-//Method that takes in an array of numbers
-//However many numbers that is, it pushes them all in the array order
-
 
 class Node 
 {
@@ -89,8 +85,88 @@ class Stack
         }
     }
 
+    printStackBottomToTop()
+    {
+        let endCount = this.count;
+        let top = this.top;
+        let pointer = this.pointer;
+        let startCount = 1;
+        
+        while (endCount !== 0)
+        {
+            while (endCount !== startCount)
+                {
+                    top = pointer;
+                    pointer = top.pointer;
+                    startCount++;
+                }
+                //Print bottom node
+                console.log(top)
+                
+                //Reset top and pointer
+                top = this.top;
+                pointer = this.pointer;
+
+                startCount = 0
+                endCount--;
+                
+} 
+                
+            
+        
+    }
+
+}
+ 
+//TO-DO List:
+
+class ToDoItem
+{
+    constructor(data, prio, description = 'test', next = null)
+    {
+        this.data = data;
+        this.priorityLevel = prio;
+        this.description = description;
+        this.next = next;
+    }
+
 }
 
+class ToDoList
+{
+    constructor (head, next = null)
+    {
+        this.head = null;
+        this.size = 0;
+        this.next = null;
+        
+    }
+
+    addItemToList(data, prio, description)
+    {
+        this.head = new ToDoItem (data, prio, description, this.head);
+        this.date = new Date();
+        this.size++;
+        
+    }
+    
+    printListData()
+    {
+        let current = this.head;
+
+        while(current)
+        {
+        console.log(current.data);
+        current = current.next;
+        }
+    }
+   
+    clearList()
+    {
+        this.head = null;
+        this.size = 0;
+    }
+}
 
 
 let stack = new Stack();
@@ -104,11 +180,39 @@ let node7 = new Node("Hi there, i'm Node7!");
 
 let array1 = ['This', 'Is', 'Just', 'A', 'Test'];
 
-stack.pushArrayToStack(array1);
+let linkedList = new ToDoList()
+
+let linkedListHead = linkedList.addItemToList("wake up", 1)
+linkedList.addItemToList("gym", 2)
+linkedList.addItemToList("walk", 3)
+linkedList.addItemToList("nap", 2)
+linkedList.addItemToList("sleep", 3)
+
+let linkedListNode = new Node();
+linkedListNode.data = linkedListHead;
+
+
+stack.pushData(linkedListNode);
+
+console.log(linkedListNode.data)
 
 
 
-console.log(stack);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
