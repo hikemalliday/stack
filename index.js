@@ -1,4 +1,3 @@
-
 //Stack:
 
 class StackNode 
@@ -99,15 +98,97 @@ class LinkedList
         this.count++;
     }
 
-    showHead()
+    addArrayToList(array)//This method adds an array to the list by converting the elements into Nodes:
     {
-        console.log('Data: ' + this.head.data)
-        console.log('Next: ' + this.head.next)
-        console.log('Previous: ' + this.head.previous)
+        for (let i = 0; i < array.length; i++)
+        {
+            let element = new ListNode(array[i]);
+            this.addNodeToList(element);
+        }
+    }
+
+    removeNode()//This method will remove the end node, or 'tail':
+    {
+        let prevNode = this.tail.previous;
+        //Remove the final node, or 'tail' by altering the second to last Node:
+        prevNode.next = null;
+        //Update 'this.tail' to the second to last Node:
+        this.tail = this.tail.previous;
+        this.count--;
+    }
+
+    removeChainAt(counter)//This method will count up from the head, and 'chop' off the chain.
+    {
+        let startCount = 1;
+        let current = this.head;
+
+        while (startCount !== counter)//Count up from the head:
+        {
+            current = current.next;
+            startCount++;
+        }
+         //Once we hit the stopping point, 'chop' off the rest of the chain:
+        current.next = null;
+        //Update 'this.count':
+        this.count = counter;
+        //Update 'this.tail':
+        this.tail = current;
+    }
+
+    printHead()
+    {
+      if(this.head != null)
+      {
+        console.log('Head: ' + this.head.data);  // prints something like 'Head: Node1'
+        if(this.head.next != null)
+        {    
+          console.log('Next: ' + this.head.next.data); // 'Next: Node2;
+        }
+        if(this.head.prev != null)
+        {    
+          console.log('Prev: ' + this.head.prev.data); //this shouldn't ever execute cause prev should be null on head but helpful to see what its pointing to if it is pointing ot something
+        } 
+        else
+        {
+        console.log("Prev: Null");
+        }
+      }
+      else
+      {
+        console.log("Head: Null");
+      }
+    }
+
+    printTail()
+    {
+        if(this.tail != null)
+        {
+            console.log('Tail: ' + this.tail.data); // prints something like "Tail: Node1"
+            if(this.tail.next != null)
+        {    
+          console.log('Next: ' + this.tail.next.data); //this shouldn't ever execute cause prev should be null on head but helpful to see what its pointing to if it is pointing ot something
+        }
+        if(this.tail.prev != null)
+        {    
+          console.log('Prev: ' + this.tail.prev.data); // prints something like "Prev: Node1"
+        } 
+        else
+        {
+        console.log("Prev: Null");
+        }
+        }
+        else 
+        {
+            console.log("Tail: Null");
+        }
     }
 }
 
+//Linked List:
+
 let linkedList = new LinkedList;
+
+let linkedListArray = ['This', 'Is', 'Just', 'A', 'Test'];
 
 let listNode1 = new ListNode('listNode1');
 let listNode2 = new ListNode('listNode2');
@@ -121,8 +202,29 @@ linkedList.addNodeToList(listNode3);
 linkedList.addNodeToList(listNode4);
 linkedList.addNodeToList(listNode5);
 
+linkedList.addArrayToList(linkedListArray);
 
-linkedList.showHead();
+//Stack:
+
+let stack = new Stack;
+
+let stackArray = ['This', 'Is', 'Just', 'A', 'Test'];
+
+let stackNode1 = new StackNode('Stack Node 1');
+let stackNode2 = new StackNode('Stack Node 2');
+let stackNode3 = new StackNode('Stack Node 3');
+let stackNode4 = new StackNode('Stack Node 4');
+let stackNode5 = new StackNode('Stack Node 5');
+
+stack.pushNodeOntoStack(stackNode1);
+stack.pushNodeOntoStack(stackNode2);
+stack.pushNodeOntoStack(stackNode3);
+stack.pushNodeOntoStack(stackNode4);
+stack.pushNodeOntoStack(stackNode5);
+
+
+
+
 
 
 
