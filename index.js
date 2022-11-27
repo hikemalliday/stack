@@ -1,200 +1,128 @@
 
-///FIX POINTERS
-//Make method that prints stack
+//Stack:
 
-class Node 
+class StackNode 
 {
-    constructor(data, pointer = null)
+    constructor (data, pointDown = null, next = null)
     {
         this.data = data;
-        this.pointer = pointer;
+        this.pointDown = pointDown;
+        this.next = next;
     }
 }
 
 class Stack 
 {
-    constructor()
+    constructor ()
     {
-        this.pointer;
         this.top;
         this.count = 0;
     }
 
-    pushData(node)
+    pushNodeOntoStack(node)
     {
-        if (this.count == 0)
+        if (this.top !== null)
         {
-            this.top = node;
-            this.pointer = null;
-            node.pointer = null;
-            this.count++;
-            return;
+            node.pointDown = this.top;
         }
-        node.pointer = this.top;
-        this.pointer = this.top;
+        
         this.top = node;
         this.count++;
-        
     }
 
-    popData()
+    pushArrayOntoStack(array)
     {
-        let current = this.top;
-        
-        //remove the top nodes pointer:
-        current.pointer = null;
-
-        //change top to next node down the stack:
-        this.top = this.pointer;
-        
-        //Change global pointer
-        this.pointer = this.top.pointer;
-        
-        //Retract the count
-        this.count--;
-    }
-
-    popDataUntil(stackNumber)
-    {
-        
-        while (stackNumber !== this.count)
-        {
-            let current = this.top;
-            
-            //remove the top nodes pointer:
-            current.pointer = null;
-        
-            //change top to next node down the stack:
-            this.top = this.pointer;
-            
-            //Change global pointer
-            this.pointer = this.top.pointer;
-            
-            //Retract the count
-            this.count--;
-        }
-
-    }
-
-    pushArrayToStack(array)
-    {
+        //Iterate over an array, and pop it onto stack:
         for (let i = 0; i < array.length; i++)
         {
-            let node = new Node(array[i]);
-            this.pushData(node);
-        }
-    }
-
-    printStackBottomToTop()
-    {
-        let endCount = this.count;
-        let top = this.top;
-        let pointer = this.pointer;
-        let startCount = 1;
-        
-        while (endCount !== 0)
-        {
-            while (endCount !== startCount)
-                {
-                    top = pointer;
-                    pointer = top.pointer;
-                    startCount++;
-                }
-                //Print bottom node
-                console.log(top)
-                
-                //Reset top and pointer
-                top = this.top;
-                pointer = this.pointer;
-
-                startCount = 0
-                endCount--;
-                
-} 
-                
-            
-        
-    }
-
-}
- 
-//TO-DO List:
-
-class ToDoItem
-{
-    constructor(data, prio, description = 'test', next = null)
-    {
-        this.data = data;
-        this.priorityLevel = prio;
-        this.description = description;
-        this.next = next;
-    }
-
-}
-
-class ToDoList
-{
-    constructor (head, next = null)
-    {
-        this.head = null;
-        this.size = 0;
-        this.next = null;
-        
-    }
-
-    addItemToList(data, prio, description)
-    {
-        this.head = new ToDoItem (data, prio, description, this.head);
-        this.date = new Date();
-        this.size++;
-        
-    }
-    
-    printListData()
-    {
-        let current = this.head;
-
-        while(current)
-        {
-        console.log(current.data);
-        current = current.next;
+            let tempNode;
+            //convert the array elements into Nodes:
+            tempNode = new StackNode(array[i])
+            this.pushNodeOntoStack(tempNode)
         }
     }
    
-    clearList()
+    popNodeOffStack()
     {
-        this.head = null;
-        this.size = 0;
+        
+        this.top = this.top.pointDown;
+        this.count--;
+    }
+
+    popNodeUntil(counter)
+    {
+        //Pop off nodes until condition:
+        while (this.count !== counter)
+        {
+            this.top = this.top.pointDown;
+            this.count--;
+        }
     }
 }
 
+//Linked List:
 
-let stack = new Stack();
-let node1 = new Node("Hi there, i'm Node1!");
-let node2 = new Node("Hi there, i'm Node2!");
-let node3 = new Node("Hi there, i'm Node3!");
-let node4 = new Node("Hi there, i'm Node4!");
-let node5 = new Node("Hi there, i'm Node5!");
-let node6 = new Node("Hi there, i'm Node6!");
-let node7 = new Node("Hi there, i'm Node7!");
+class ListNode 
+{
+    constructor(data, next = null, previous = null)
+    {
+        this.data = data;
+        this.next = next;
+        this.previous = previous;
+    }
+}
 
-let array1 = ['This', 'Is', 'Just', 'A', 'Test'];
+class LinkedList
+{
+    constructor()
+    {
+        this.head = null;
+        this.tail = null;
+        this.count = 0;
+    }
 
-let linkedList = new ToDoList()
+    addNodeToList(node)
+    {
+        if (this.head == null)
+        {
+            this.head = node;
+        }
+        if (this.count >= 1)
+        {
+        //Set 'next' for the previous node:
+        this.tail.next = node;
+        }
+         //Set 'previous' for the new node:
+        node.previous = this.tail;
+        //Set the new 'tail'
+        this.tail = node;
+        this.count++;
+    }
 
-let linkedListHead = linkedList.addItemToList("wake up", 1)
-linkedList.addItemToList("gym", 2)
-linkedList.addItemToList("walk", 3)
-linkedList.addItemToList("nap", 2)
-linkedList.addItemToList("sleep", 3)
+    showHead()
+    {
+        console.log('Data: ' + this.head.data)
+        console.log('Next: ' + this.head.next)
+        console.log('Previous: ' + this.head.previous)
+    }
+}
 
-let linkedListNode = new Node();
-linkedListNode.data = linkedListHead;
+let linkedList = new LinkedList;
+
+let listNode1 = new ListNode('listNode1');
+let listNode2 = new ListNode('listNode2');
+let listNode3 = new ListNode('listNode3');
+let listNode4 = new ListNode('listNode4');
+let listNode5 = new ListNode('listNode5');
+
+linkedList.addNodeToList(listNode1);
+linkedList.addNodeToList(listNode2);
+linkedList.addNodeToList(listNode3);
+linkedList.addNodeToList(listNode4);
+linkedList.addNodeToList(listNode5);
 
 
-stack.pushData(linkedListNode);
-
-console.log(linkedListNode.data)
+linkedList.showHead();
 
 
 
